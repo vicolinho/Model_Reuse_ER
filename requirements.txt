@@ -1,0 +1,16 @@
+networkx~=3.3
+matplotlib~=3.7.0
+scikit-learn >= 1.2.0
+numpy >= 1.24.0
+pandas~=2.2.2
+seaborn~=0.13.2
+xgboost~=2.1.1
+tqdm~=4.66.5
+scipy~=1.14.0
+python-utils
+leidenalg
+fasttext-wheel
+nltk
+typer
+hnswlib
+sentence-transformers
