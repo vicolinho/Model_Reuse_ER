@@ -18,7 +18,7 @@ This work addresses these challenges and focuses on managing existing models and
 of suitable models for new data sources based on feature distributions. 
 The results of our approach _MoRe_ demonstrate that our approach achieves comparable qualitative 
 results and outperforms both a multi-source active learning method and a transfer learning approach regarding
-efficiency.
+efficiency as well as LLM-based ER methods.
 
 
 ## Worflow
