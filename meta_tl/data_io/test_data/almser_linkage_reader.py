@@ -3,7 +3,7 @@ import sys
 
 import pandas as pd
 import argparse
-
+sys.path.append(os.getcwd())
 from meta_tl.data_io import linkage_problem_io
 
 

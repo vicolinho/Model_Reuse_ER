@@ -41,7 +41,7 @@ The following call generate similarity vectors for each data source pair and sav
 a dictionary where the key is the data source pair and the value a dictionary of record pairs as key 
 and feature vectors as value. 
 
-`python record_linkage/linkage_generation_dexter.py -d datasets/(dataset_dir) -o data/linage_problems/(lp_path)`
+`python meta_tl/data_set_generation/linkage_generation_dexter.py -d datasets/(dataset_dir) -o data/linage_problems/(lp_path)`
 
 ### Almser datasets
 To use the raw feature files provided from the Almser publication, we transform them to our format where each data source pair is saved in a dictionary 

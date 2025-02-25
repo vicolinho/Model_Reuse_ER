@@ -1,5 +1,7 @@
 import argparse
 import os
+import sys
+sys.path.append(os.getcwd())
 import record_linkage.blocking.blocking_functions_solution as blocking_function
 from meta_tl.data_io.test_data import reader
 from record_linkage.blocking import blocking
