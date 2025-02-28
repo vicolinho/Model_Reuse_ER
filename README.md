@@ -21,7 +21,7 @@ results and outperforms both a multi-source active learning method and a transfe
 efficiency as well as LLM-based ER methods.
 
 
-## Worflow
+## Workflow
 
 ![](workflow.png)
 
@@ -53,7 +53,7 @@ with the similarity feature vector dictionary as value.
     -lo data/linkage_problems/selected_data_set`
 
 
-## Run StoRe
+## Run MoRe
 `python store_pipeline/main_incremental.py --parameters`
 
 ### Parameters
