@@ -74,13 +74,13 @@ parser.add_argument('--active_learning', '-al', type=str, default='almser', choi
                     help='active learning algorithm')
 parser.add_argument('--min_budget', '-mb', type=int, default=50,
                     help='minimum budget for each cluster')
-parser.add_argument('--total_budget', '-tb', type=int, default=1000,
+parser.add_argument('--total_budget', '-tb', type=int, default=2000,
                     help='total budget')
 parser.add_argument('--retrain', '-rt', type=bool, default=False,
                     help='retrain')
-parser.add_argument('--number_of_rt', '-nrt', type=int, default=5,
+parser.add_argument('--number_of_rt', '-nrt', type=int, default=2,
                     help='number of retrain steps')
-parser.add_argument('--budget_retrain', '-b_rt', type=int, default=100,
+parser.add_argument('--budget_retrain', '-b_rt', type=int, default=250,
                     help='budget of retrain')
 parser.add_argument('--budget_unsolved', '-ub', type=int, default=200,
                     help='budget for unsolved linkage problems being not similar to any solved one')
