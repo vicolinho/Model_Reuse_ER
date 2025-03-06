@@ -105,8 +105,6 @@ def generate_samples(rec_dict_a, rec_dict_b, ground_truth_pairs, training_size):
     positive_pairs = set(list(ground_truth_pairs)[:training_size])
     return positive_pairs, negative_pairs
 
-
-# TODO Implement the generation of a set of vectors for computing the Fisher score
 def generate_feature_vectors(rec_dict_a, rec_dict_b, pair_set, blocking_key_candidates):
     '''
     This method generates for a set of record pairs a set of vectors. The set is represented as numpy array. The
@@ -133,7 +131,6 @@ def generate_feature_vectors(rec_dict_a, rec_dict_b, pair_set, blocking_key_cand
     return feature_vector_array
 
 
-# TODO Implement the Computation of the Fisher score for blocking keys
 def compute_fisher_score(pf_vectors: ndarray, nf_vectors: ndarray):
     '''
     Computes the fisher scores for all blocking key candidates. The pf_vectors and pn_vectors

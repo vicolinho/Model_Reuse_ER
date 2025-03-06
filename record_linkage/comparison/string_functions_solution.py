@@ -68,7 +68,6 @@ def jaccard_comp(val1, val2):
 
     jacc_sim = float(i) / u
 
-    # ************ End of your Jaccard code *************************************
 
     assert jacc_sim >= 0.0 and jacc_sim <= 1.0
 
