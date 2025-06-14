@@ -67,11 +67,8 @@ class ActiveLearningBootstrap:
                 num_neg += 1
             i += 1
         score_features = np.stack((inter_scoring, intra_scoring, all_train_class), axis=-1)
-        print(score_features.shape)
-        data_Frame = pd.DataFrame(score_features, columns=["inter_score", "intra_score", "all_train_class"])
         print('  Number of positive and negative records: %d / %d' % \
               (num_pos, num_neg))
-        print('')
         # initial training data_io for active learning method
         class_sum = 0
         if self.iteration_budget > self.budget:
@@ -208,7 +205,7 @@ def classify(sim_vec_dict, model):
     Returns:
         class_match_Set: record pairs classified as matches
         class_nonmatch_set: record pairs classified as non-matches
-        pair confidence list: list of probabilities for each record pair to be a match
+        pair confidence dict: dict of probabilities for each record pair to be a match
     '''
     num_train_rec = len(sim_vec_dict)
     num_features = len(list(sim_vec_dict.values())[0])

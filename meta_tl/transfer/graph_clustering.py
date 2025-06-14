@@ -8,6 +8,7 @@ from networkx.algorithms.community.quality import modularity
 import leidenalg
 import igraph as ig
 
+sys.path.append('/Users/abdulnaser/Desktop/Masterarbeit/metadatatransferlearning-main/meta_tl/')
 
 
 def heaviest(G):
@@ -74,8 +75,7 @@ def detect_communities_using_louvain(graph):
 
 def detect_communities_using_leiden(graph: networkx.Graph):
     g = ig.Graph()
-    print(graph.number_of_nodes())
-    print(graph.number_of_edges())
+    print("|V|={} |E|={}".format(graph.number_of_nodes(), graph.number_of_edges()))
     for n in graph.nodes():
         g.add_vertices(str(n))
     for u, v in graph.edges():
@@ -96,8 +96,6 @@ def detect_communities_using_leiden(graph: networkx.Graph):
     for n in graph.nodes():
         if n not in nodes_in_cluster:
             communities.append(set([n]))
-    for community in communities:
-        print(community)
     return communities
 
 

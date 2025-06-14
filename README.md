@@ -58,24 +58,23 @@ with the similarity feature vector dictionary as value.
 
 ### Parameters
 
-| Name                             | Description                                                                                   | Options                                                                           |
-|----------------------------------|-----------------------------------------------------------------------------------------------|-----------------------------------------------------------------------------------|
-| `--train_pairs`<br>`-tp`         | Train pairs (input file containing training data).                                            | -                                                                                 |
-| `--test_pairs`<br>`-gs`          | Test pairs (input file containing test data).                                                 | -                                                                                 |
-| `--linkage_tasks_dir`<br>`-l`    | Directory for linkage problems.                                                               | -                                                                                 |
-| `--statistical_test`<br>`-s`     | Statistical test for comparing linkage problems.                                              | default: `ks_test`<br> `wasserstein_distance`, `calculate_psi`                    |
-| `--ratio_sim_atomic_dis`<br>`-rs` | Amount of similar feature distributions required for considering linkage problems as similar. | `0`                                                                               |
-| `--comm_detect`<br>`-cd`         | Community detection algorithm to use.                                                         | default:`leiden`<br>`louvain`, `girvan_newman`,<br>`label_propagation_clustering` |
-| `--relevance_score`<br>`-re`     | Relevance score for ordering the linkage problems of a cluster  (not used)                    | default: `betweenness_centrality`, `largest`, `pageRank`                          |
-| `--active_learning`<br>`-al`     | Active learning algorithm to use.                                                             | default: `almser`<br> `bootstrap`                                                 |
-| `--min_budget`<br>`-mb`          | Minimum budget for each cluster.                                                              | default: `50`                                                                     |
-| `--total_budget`<br>`-tb`        | Total budget for the entire process.                                                          | default: `2000`                                                                   |
-| `--budget_unsolved`<br>`-ub`     | Budget for unsolved linkage problems that are not similar to any solved one.                  | default: `200`                                                                    |
-| `--batch_size`<br> `-b`          | Batch size for processing.                                                                    | default: `5`                                                                      |
-| `--retrain`<br> `-rt`            | is retraining                                                                                 | default: `False`                                                                  |
-| `--number_of_rt`<br> `-nrt`      | number of retraining steps                                                                    | default: `2`                                                                      |
-| `--budget_retrain`<br> `-b_rt`   | label budget for retraining step                                                              | default: `250`                                                                    |
-
+| Name                           | Description                                                                                        | Options                                                                           |
+|--------------------------------|----------------------------------------------------------------------------------------------------|-----------------------------------------------------------------------------------|
+| `--train_pairs`<br>`-tp`       | Train pairs (input file containing training data).                                                 | -                                                                                 |
+| `--test_pairs`<br>`-gs`        | Test pairs (input file containing test data).                                                      | -                                                                                 |
+| `--linkage_tasks_dir`<br>`-l`  | Directory for linkage problems.                                                                    | -                                                                                 |
+| `--statistical_test`<br>`-s`   | Statistical test for comparing linkage problems.                                                   | default: `ks_test`<br> `wasserstein_distance`, `calculate_psi`                    |
+| `--ratio_sim_atomic_dis`<br>`-rs` | Amount of similar feature distributions required for considering linkage problems as similar.      | `0`                                                                               |
+| `--comm_detect`<br>`-cd`       | Community detection algorithm to use.                                                              | default:`leiden`<br>`louvain`, `girvan_newman`,<br>`label_propagation_clustering` |
+| `--relevance_score`<br>`-re`   | Relevance score for ordering the linkage problems of a cluster  (not used)                         | default: `betweenness_centrality`, `largest`, `pageRank`                          |
+| `--active_learning`<br>`-al`   | Active learning algorithm to use.                                                                  | default: `almser`<br> `bootstrap`                                                 |
+| `--min_budget`<br>`-mb`        | Minimum budget for each cluster.                                                                   | default: `50`                                                                     |
+| `--total_budget`<br>`-tb`      | Total budget for the entire process.                                                               | default: `1000`                                                                   |
+| `--batch_size`<br> `-b`        | Batch size for active learning.                                                                    | default: `5`                                                                      |
+| `--is_recluster`<br> `-rec`    | is recluster                                                                                       | default: `False`                                                                  |
+| `--unsolved_ratio`<br>`-uns_ratio`   | ratio thresold of the number of problems not being used for training and all problems in a cluster | default: `0.25`                                                                   |
+| `--use_sim_quantile`<br> `-sim_q` | distribution based selection dis                                                                   | default: `False`                                                                  |
+| `--budget_retrain`<br> `-b_rt` | label budget for retraining step if only unused problems are in the cluster                        | default: `250`                                                                    |
 
 ## References
 

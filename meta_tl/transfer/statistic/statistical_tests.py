@@ -15,12 +15,39 @@ from xgboost.sklearn import XGBClassifier
 from meta_tl.transfer.statistic.psi_computation import calculate_psi
 
 # Add the path to custom modules
-sys.path.append('/Users/abdulnaser/Desktop/Masterarbeit/metadatatransferlearning-main/meta_tl/')
-from meta_tl.transfer.utils import prepare_dataframe_to_similarity_comparison, compute_weighted_mean_similarity, \
-    prepare_dataframe_to_similarity_comparison_from_lp, prepare_numpy_to_similarity_comparison_from_lp
+from meta_tl.transfer.utils import compute_weighted_mean_similarity, \
+    prepare_numpy_to_similarity_comparison_from_lp
 
 # Suppress specific warning messages
 warnings.filterwarnings('ignore', category=pd.errors.DtypeWarning)
+
+
+def kl_divergence(p, q, num_bins=100):
+    """Compute the KL divergence D(P || Q) using binned data.
+
+    Parameters:
+    p : numpy.ndarray
+        First array (data points).
+    q : numpy.ndarray
+        Second array (data points).
+    num_bins : int
+        Number of bins to use for histogram.
+
+    Returns:
+    float
+        KL divergence.
+    """
+    # Create histograms for both distributions
+    hist_p, bin_edges = np.histogram(p, bins=num_bins, density=True)
+    hist_q, _ = np.histogram(q, bins=bin_edges, density=True)
+
+    # Normalize the histograms to ensure they sum to 1
+    hist_p += 1e-10  # Avoid division by zero
+    hist_q += 1e-10  # Avoid division by zero
+    # Compute KL divergence
+    kl_div = np.sum(hist_p * np.log(hist_p / hist_q))
+
+    return kl_div
 
 
 def compute_mmd(X, Y, kernel='rbf', gamma=None):
@@ -208,7 +235,9 @@ def compare_linkage_tasks_numpy(df_1: numpy.ndarray, df_2: numpy.ndarray, task_1
             x_array = []
             for i in range(x.shape[0]):
                 x_array.append(x[i])
-            y = [1 for i in range(sample_1.shape[0])].extend([0 for i in range(sample_2.shape[0])])
+            y = [1 for i in range(sample_1.shape[0])]
+            y.extend([0 for i in range(sample_2.shape[0])])
+            y = np.asarray(y)
             params = {
                 'objective': 'binary:logistic',
                 'max_depth': 4,
@@ -216,14 +245,15 @@ def compare_linkage_tasks_numpy(df_1: numpy.ndarray, df_2: numpy.ndarray, task_1
                 'learning_rate': 1.0,
                 'n_estimators': 100
             }
-
+            indices = np.random.choice(x.shape[0], x.shape[0],
+                                       replace=False)
+            x = x[indices]
+            y = y[indices]
             # instantiate the classifier
             model = XGBClassifier(**params)
             kfold = KFold(n_splits=5)
-            cv_score = cross_val_score(estimator=model, X=x_array, y=y, cv=kfold, scoring='accuracy').mean()
-
+            cv_score = cross_val_score(model, x, y, cv=kfold, scoring='accuracy').mean()
             return task_1_name, task_2_name, cv_score
-
         elif test_type == 'MMD':
             mmd_value = mmd_permutation_test(df_1, df_2)
             return task_1_name, task_2_name, mmd_value
@@ -273,9 +303,15 @@ def compare_linkage_tasks_numpy(df_1: numpy.ndarray, df_2: numpy.ndarray, task_1
                         col_array_2[col_array_2 == -1] = 0
                         max_value = calculate_psi(np.ones(col_array_1.shape), np.zeros(col_array_2.shape))
                         psi_value = calculate_psi(col_array_1, col_array_2)
-                        scaled_psi_value = psi_value/max_value
+                        scaled_psi_value = psi_value / max_value
                         stat_lists[column].append(scaled_psi_value)
                         results.append(scaled_psi_value)
+                    elif test_type == 'kl_divergence':
+                        col_array_1[col_array_1 == -1] = 0
+                        col_array_2[col_array_2 == -1] = 0
+                        kl_div = kl_divergence(col_array_1, col_array_2)
+                        stat_lists[column].append(kl_div)
+                        results.append(kl_div)
         return task_1_name, task_2_name, results
 
 
@@ -299,15 +335,6 @@ def evaluate_similarity(results, test_type, alpha=0.05):
         return 0 if results < 0.05 else 1
 
     elif isinstance(results, list):
-        # if case == 1:  # All features should have the same distribution
-        #     if test_type == 'ks_test':
-        #         return 0 if any(value < alpha for value in results) else 1
-        #     else:  # 'wasserstein_distance' or 'calculate_psi'
-        #         return 0 if any(value > 0.1 for value in results) else 1
-        # else:  # Majority of features should have the same distribution
-        #     threshold = (lambda x: x > alpha) if test_type == 'ks_test' else (lambda x: x < 0.1)
-        #     similar_count = sum(threshold(value) for value in results)
-        #     return 1 if similar_count >= len(results) // 2 else 0
         if test_type == 'ks_test':
             sim = 0 if any(value[1] < alpha for value in results) else 1
         else:  # 'wasserstein_distance' or 'calculate_psi'
@@ -318,47 +345,6 @@ def evaluate_similarity(results, test_type, alpha=0.05):
             #sim = 0.5 if similar_count >= len(results) // 2 else 0
             sim = round(similar_count / len(results), 3)
         return sim
-
-
-def compute_similarity_test(test_type, linkage_problems: list[tuple[str, str, dict[(str, str):list]]],
-                            relevant_columns, multivariate=False, weights=[], is_save=False, path=''):
-    """
-    Computes the similarity between pairs of record linkage tasks using various statistical tests.
-
-    Parameters:
-    case (int): Determines the logic for evaluating similarity (1 or 2).
-    test_type (str): The type of statistical test to perform.
-    tasks_path (str): Path to the folder containing the record linkage tasks.
-    relevant_columns (list): List of relevant columns to compare.
-    multivariate (bool): Flag indicating if the test is multivariate.
-
-    Returns:
-    tuple: A DataFrame containing similar record linkage tasks and a general DataFrame with all comparisons.
-    """
-    stat_lists = {col: [] for col in relevant_columns} if not multivariate else None
-
-    first_tasks, second_tasks, similarities, processed_pairs = [], [], [], []
-    alpha = 0.05
-
-    linkage_problems_data_frames = [prepare_dataframe_to_similarity_comparison_from_lp(task[2]) for task in
-                                    linkage_problems]
-    processed = 0
-    for index in tqdm(range(len(linkage_problems))):
-        task_1 = linkage_problems[index]
-        weight_vecs_1 = linkage_problems_data_frames[index]
-        for index_2 in range(index + 1, len(linkage_problems)):
-            task_2 = linkage_problems[index_2]
-            weight_vecs_2 = linkage_problems_data_frames[index_2]
-            if task_1[0] != task_2[0] and task_1[1] != task_2[1]:
-                file1, file2, results = compare_linkage_tasks(
-                    weight_vecs_1, weight_vecs_2, str((task_1[0], task_1[1])), str((task_2[0], task_2[1])),
-                    test_type, stat_lists, multivariate)
-                similarity = evaluate_similarity(results, test_type, alpha)
-                first_tasks.append(file1)
-                second_tasks.append(file2)
-                similarities.append(similarity)
-    return transform_to_statistic_result(first_tasks, second_tasks, stat_lists, similarities, multivariate,
-                                         weights, is_save, path)
 
 
 def compute_similarity_test_numpy(test_type, linkage_problems: list[tuple[str, str, dict[(str, str):list]]],
@@ -432,6 +418,8 @@ def transform_to_statistic_result(first_tasks, second_tasks, stat_lists, similar
                 lambda row: compute_weighted_mean_similarity(row[2:-1], weights, statistical_test, model_score), axis=1)
         else:
             print("empty")
+    else:
+        print(results_df['similarity'])
 
     # Output statistics
     num_similar_tasks = similar_tasks_df.shape[0]

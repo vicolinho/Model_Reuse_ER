@@ -224,51 +224,50 @@ def generate_models(selected_tasks: dict[(str, str):list[(str, str)]],
                     model_name='rf', active_learning_strategy='bootstrap'):
     """
     This method generates for each cluster C^i a model M_C^i. It examines the following steps:
-
     1. Budget allocation
-        The total budget is distributed across the clusters. It distinguishes between singleton and clusters with more
-        than 1 element. To guarantee sufficient training data, we allocate a minimum budget for each cluster. The remaining
-        budget is proportional distributed regarding the size of the most relevant lp of the cluster.
-        If the total budget is exceeded, we keep the most dissimilar singleton cluster regarding the other clusters as singleton
-        and assign the remaining singletons to the most similar cluster.
+    The total budget is distributed across the clusters. It distinguishes between singleton and clusters with more
+    than 1 element. To guarantee sufficient training data, we allocate a minimum budget for each cluster. The remaining
+    budget is proportional distributed regarding the size of the most relevant lp of the cluster.
+    If the total budget is exceeded, we keep the most dissimilar singleton cluster regarding the other clusters as singleton
+    and assign the remaining singletons to the most similar cluster.
     2. Active Learning
-        For each cluster, we apply an active learning approach for the most relevant lp of the cluster.
-        If we do not use the whole allocated budget, we repeat the active learning process with the 2nd relevant lp of
-        the cluster and so on. We maintain all used lps for each cluster to use them for comparing with new lps.
+    For each cluster, we apply an active learning approach for the most relevant lp of the cluster.
+    If we do not use the whole allocated budget, we repeat the active learning process with the 2nd relevant lp of
+    the cluster and so on. We maintain all used lps for each cluster to use them for comparing with new lps.
     3. Model generation
-        We build a random forest as classification model
+    We build a random forest as classification model.
 
     Parameters
+    -----------
+        selected_tasks:
+            A dictionary of clusters with the most relevant lp as key and the list of similar LPs as value.
+        linkage_problems:
+            dictionary of linkage problems with the data source pair as key and the dictionary of
+            similarity features as value
+        tasks_info_df:
+            DataFrame containing the result of the statistical comparison
+        min_budget:
+            The minimum budget to allocate per task.
+        total_budget:
+            The total available budget.
+        iteration_budget:
+            budget for a batch.
+        gold_links:
+            set of ground truth links as oracle
+        model_name:
+            name of the model Default Random Forest
+        ratio_sim_atomic_dis:
+            filter for similar LPs
+
+
+    Returns
     ----------
-    selected_tasks  : dictionary
-        A dictionary of clusters with the most relevant lp as key and the list of similar LPs as value.
-    linkage_problems : dictionary
-        dictionary of linkage problems with the data source pair as key and the dictionary of
-        similarity features as value
-    tasks_info_df : (pd.DataFrame)
-        DataFrame containing the result of the statistical comparison
-    min_budget : int
-        The minimum budget to allocate per task.
-    total_budget : int
-        The total available budget.
-    iteration_budget  : int
-        budget for a batch.
-    gold_links : set
-        set of ground truth links as oracle
-    model_name : str
-        name of the model Default Random Forest
-    ratio_sim_atomic_dis : filter for similar LPs
-
-
-
-
-    : returns:
-        - model_dict - model dictionary for each cluster.
-        - selected_tasks - modified dictionary of clusters if we merged singleton to other clusters
-        - training_data - dictionary with training data for each cluster
-        - used_lps_for_training - dictionary with used LPs for each cluster
-
-
+        model_dict:
+            model dictionary for each cluster
+        selected_tasks: tasks
+            modified dictionary of clusters if we merged singleton to other clusters
+        training_data: training_data
+            dictionary with training data for each cluster
     """
     inter_scoring, intra_scoring = link_scoring.cluster_occurrence_scoring(linkage_problems, selected_tasks)
     model_dict = {}
@@ -377,8 +376,6 @@ def select_new_training_data(allocated_budgets, tasks: dict[(str, str):list[(str
             solved_problem_cluster = []
             record_pair_scoring = {}
             record_pair_scoring_intra = {}
-            # TODO check candidate selection for cluster
-            # while used_budget < budget and index < len(sorted_other_tasks):
             lp_list = tasks[task]
             for lp_problem in lp_list:
                 lp_problem_extend.update(lp_problem[2])
