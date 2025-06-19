@@ -72,7 +72,7 @@ with the similarity feature vector dictionary as value.
 | `--total_budget`<br>`-tb`      | Total budget for the entire process.                                                               | default: `1000`                                                                   |
 | `--batch_size`<br> `-b`        | Batch size for active learning.                                                                    | default: `5`                                                                      |
 | `--is_recluster`<br> `-rec`    | is recluster                                                                                       | default: `False`                                                                  |
-| `--unsolved_ratio`<br>`-uns_ratio`   | ratio threshold t_cov of the number of problems not being used for training and all problems in a cluster | default: `0.25`                                                                   |
+| `--unsolved_ratio`<br>`-uns_ratio`   | ratio threshold t_cov of the number of problems not being used for training and all problems in a cluster. If t_cov > 0 and -sim_q is true, sel_comb is used as selection strategy | default: `0.25`                                                                   |
 | `--use_sim_quantile`<br> `-sim_q` | similarity distribution based selection sel_dis                                                                   | default: `False`                                                                  |
 | `--budget_retrain`<br> `-b_rt` | label budget for retraining step if only unused problems are in the cluster                        | default: `250`                                                                    |
 
