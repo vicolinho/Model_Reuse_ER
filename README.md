@@ -53,7 +53,7 @@ with the similarity feature vector dictionary as value.
     -lo data/linkage_problems/selected_data_set`
 
 
-## Run MoRe
+## Run MoRER
 `python store_pipeline/main_incremental.py --parameters`
 
 ### Parameters
@@ -72,8 +72,8 @@ with the similarity feature vector dictionary as value.
 | `--total_budget`<br>`-tb`      | Total budget for the entire process.                                                               | default: `1000`                                                                   |
 | `--batch_size`<br> `-b`        | Batch size for active learning.                                                                    | default: `5`                                                                      |
 | `--is_recluster`<br> `-rec`    | is recluster                                                                                       | default: `False`                                                                  |
-| `--unsolved_ratio`<br>`-uns_ratio`   | ratio thresold of the number of problems not being used for training and all problems in a cluster | default: `0.25`                                                                   |
-| `--use_sim_quantile`<br> `-sim_q` | distribution based selection dis                                                                   | default: `False`                                                                  |
+| `--unsolved_ratio`<br>`-uns_ratio`   | ratio threshold t_cov of the number of problems not being used for training and all problems in a cluster | default: `0.25`                                                                   |
+| `--use_sim_quantile`<br> `-sim_q` | similarity distribution based selection sel_dis                                                                   | default: `False`                                                                  |
 | `--budget_retrain`<br> `-b_rt` | label budget for retraining step if only unused problems are in the cluster                        | default: `250`                                                                    |
 
 ## References
