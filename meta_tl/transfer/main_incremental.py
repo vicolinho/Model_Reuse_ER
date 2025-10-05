@@ -71,7 +71,7 @@ parser.add_argument('--comm_detect', '-cd', type=str, default='leiden',
 parser.add_argument('--relevance_score', '-re', type=str, default='betweenness_centrality',
                     choices=['betweenness_centrality', 'largest', 'pageRank'],
                     help='relevance score for ordering the linkage problems in a cluster')
-parser.add_argument('--active_learning', '-al', type=str, default='bootstrap', choices=['almser', 'bootstrap'],
+parser.add_argument('--active_learning', '-al', type=str, default='bootstrap', choices=['supervised','almser', 'bootstrap'],
                     help='active learning algorithm')
 parser.add_argument('--budget_retrain', '-b_rt', type=int, default=250,
                     help='budget of retrain')

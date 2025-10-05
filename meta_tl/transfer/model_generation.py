@@ -347,6 +347,29 @@ def generate_models(selected_tasks: dict[(str, str):list[(str, str)]],
                                     batch_size=iteration_budget)
             almser_exp.run_AL(True)
             current_train_vectors, current_train_class = almser_exp.select_training_data()
+        else:
+            num_train_rec = len(lp_problem_extend)
+            num_features = len(list(lp_problem_extend.values())[0])
+            current_train_vectors = np.zeros([num_train_rec, num_features])
+            # class label 0 and 1 for each vector in all_train_data
+            current_train_class = np.zeros(num_train_rec)
+            rec_pair_id_list = []
+
+            num_pos = 0
+            num_neg = 0
+            i = 0
+            # initialization of numpy arrays representing the similarity vectors and the corresponding classes
+            for (rec_id1, rec_id2) in lp_problem_extend:
+                rec_pair_id_list.append((rec_id1, rec_id2))
+                sim_vec = lp_problem_extend[(rec_id1, rec_id2)]
+                current_train_vectors[:][i] = sim_vec
+                if tuple(sorted((rec_id1, rec_id2))) in gold_links:
+                    current_train_class[i] = 1.0
+                    num_pos += 1
+                else:
+                    current_train_class[i] = 0.0
+                    num_neg += 1
+                i += 1
         print("used budget {} vs calc budget {}".format(current_train_vectors.shape[0], budget))
         training_data_dict[task] = (current_train_vectors, current_train_class)
         cal_model, score = active_learning_solution.train_model(current_train_vectors, current_train_class, model_name,
