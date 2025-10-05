@@ -53,7 +53,7 @@ with the similarity feature vector dictionary as value.
     -lo data/linkage_problems/selected_data_set`
 
 
-## Run MoRe
+## Run MoRER
 `python store_pipeline/main_incremental.py --parameters`
 
 ### Parameters
@@ -64,16 +64,14 @@ with the similarity feature vector dictionary as value.
 | `--test_pairs`<br>`-gs`        | Test pairs (input file containing test data).                                                      | -                                                                                 |
 | `--linkage_tasks_dir`<br>`-l`  | Directory for linkage problems.                                                                    | -                                                                                 |
 | `--statistical_test`<br>`-s`   | Statistical test for comparing linkage problems.                                                   | default: `ks_test`<br> `wasserstein_distance`, `calculate_psi`                    |
-| `--ratio_sim_atomic_dis`<br>`-rs` | Amount of similar feature distributions required for considering linkage problems as similar.      | `0`                                                                               |
 | `--comm_detect`<br>`-cd`       | Community detection algorithm to use.                                                              | default:`leiden`<br>`louvain`, `girvan_newman`,<br>`label_propagation_clustering` |
-| `--relevance_score`<br>`-re`   | Relevance score for ordering the linkage problems of a cluster  (not used)                         | default: `betweenness_centrality`, `largest`, `pageRank`                          |
 | `--active_learning`<br>`-al`   | Active learning algorithm to use.                                                                  | default: `almser`<br> `bootstrap`                                                 |
 | `--min_budget`<br>`-mb`        | Minimum budget for each cluster.                                                                   | default: `50`                                                                     |
 | `--total_budget`<br>`-tb`      | Total budget for the entire process.                                                               | default: `1000`                                                                   |
 | `--batch_size`<br> `-b`        | Batch size for active learning.                                                                    | default: `5`                                                                      |
 | `--is_recluster`<br> `-rec`    | is recluster                                                                                       | default: `False`                                                                  |
-| `--unsolved_ratio`<br>`-uns_ratio`   | ratio thresold of the number of problems not being used for training and all problems in a cluster | default: `0.25`                                                                   |
-| `--use_sim_quantile`<br> `-sim_q` | distribution based selection dis                                                                   | default: `False`                                                                  |
+| `--unsolved_ratio`<br>`-uns_ratio`   | ratio threshold t_cov of the number of problems not being used for training and all problems in a cluster. If t_cov > 0 and -sim_q is true, sel_comb is used as selection strategy | default: `0.25`                                                                   |
+| `--use_sim_quantile`<br> `-sim_q` | similarity distribution based selection sel_dis                                                                   | default: `False`                                                                  |
 | `--budget_retrain`<br> `-b_rt` | label budget for retraining step if only unused problems are in the cluster                        | default: `250`                                                                    |
 
 ## References
