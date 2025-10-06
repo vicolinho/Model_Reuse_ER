@@ -60,6 +60,7 @@ run MoRER on the dexter data set with bootstrap active learning using a budget o
 `python .\morer\reuse\main.py -d .\datasets\dexter\DS-C0\SW_0.3 -l .\data\linkage_problems\dexter\ -mg bootstrap -tb 1000`
 
 run MoRER on the dexter data set with bootstrap active learning using a budget of 1000 and retraining.
+
 `python .\morer\reuse\main.py -d .\datasets\dexter\DS-C0\SW_0.3 -l .\data\linkage_problems\dexter\ -mg bootstrap -tb 1000 -rec True -uns_ratio 0.25`
 
 ### Parameters
