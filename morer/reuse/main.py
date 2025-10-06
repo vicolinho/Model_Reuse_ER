@@ -63,7 +63,7 @@ parser.add_argument('--linkage_tasks_dir', '-l', type=str, default='data/linkage
 parser.add_argument('--statistical_test', '-s', type=str, default='ks_test',
                     choices=['ks_test', 'wasserstein_distance', 'calculate_psi', 'ML_based', 'kl_divergence'],
                     help='statistical test for comparing lps')
-parser.add_argument('--ratio_sim_atomic_dis', '-rs', type=float, default=0,
+parser.add_argument('--ratio_sim_atomic_dis', '-rs', type=float, default=0.01,
                     help='amount of similar feature distributions so the lps are considered as similar')
 parser.add_argument('--comm_detect', '-cd', type=str, default='leiden',
                     choices=['leiden', 'girvan_newman', 'label_propagation_clustering', 'louvain'],
@@ -200,18 +200,11 @@ for i in range(3):
     weights = np.std(all_sims, axis=0)
     weights[weights == 0] = 0.05
 
-    if not os.path.exists(
-            os.path.join(RECORD_LINKAGE_TASKS_PATH, "incremental/statistical_tests_{}".format(STATISTICAL_TEST))):
-        linkage_tasks_similarity_df, linkage_tasks_general_df = compute_similarity_test_numpy(
-            STATISTICAL_TEST, solved_problems, relevant_columns, multivariate=multivariate, weights=weights,
-            is_save=False,
-            path=os.path.join(RECORD_LINKAGE_TASKS_PATH, 'incremental')
-        )
-    else:
-        linkage_tasks_similarity_df, linkage_tasks_general_df = statistical_tests \
-            .read_statistical_results(path=os.path.join(RECORD_LINKAGE_TASKS_PATH, 'incremental'),
-                                      case=STATISTICAL_TEST)
-
+    linkage_tasks_similarity_df, linkage_tasks_general_df = compute_similarity_test_numpy(
+        STATISTICAL_TEST, solved_problems, relevant_columns, multivariate=multivariate, weights=weights,
+        is_save=False,
+        path=os.path.join(RECORD_LINKAGE_TASKS_PATH, 'incremental')
+    )
     # ===================================================
     # Step 3: Perform Graph Clustering on Linkage Tasks
     # ===================================================
