@@ -1,5 +1,4 @@
-# Model Reuse via Feature Distribution Analysis for Incremental Entity Resolution
-
+# Efficient Model Repository for Entity Resolution: Construction, Search, and Integration
 Entity resolution (ER) is a fundamental task in data integration that enables insights from heterogeneous data sources. 
 The primary challenge of ER lies in classifying record pairs as matches or non-matches, 
 which in multi-source ER (MS-ER) scenarios can become complicated due to data source heterogeneity and
