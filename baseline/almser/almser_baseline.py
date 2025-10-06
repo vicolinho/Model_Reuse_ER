@@ -23,11 +23,11 @@ runs = 3
 query_strategy = 'almser_gb' #almser_gb, uncertainty, disagreeement, almser_group, random
 
 
-from meta_tl.transfer.incremental.util import split_linkage_problem_tasks
-from meta_tl.data_io import linkage_problem_io
+from morer.reuse.incremental.util import split_linkage_problem_tasks
+from morer.data_io import linkage_problem_io
 from record_linkage.classification.machine_learning import constants
 from record_linkage.evaluation import metrics
-from meta_tl.data_io.test_data import reader, wdc_reader, almser_linkage_reader
+from morer.data_io.test_data import reader, wdc_reader, almser_linkage_reader
 import os
 file_name = os.path.join(MAIN_PATH, data_file)
 RECORD_LINKAGE_TASKS_PATH = os.path.join(MAIN_PATH, linkage_tasks_dir)

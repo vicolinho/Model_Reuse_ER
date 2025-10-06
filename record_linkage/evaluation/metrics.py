@@ -1,7 +1,7 @@
 import collections
 from typing import List
 
-from meta_tl.data_io.cluster import Cluster
+from morer.data_io.cluster import Cluster
 
 
 def generate_links(cluster_list: List[Cluster]):

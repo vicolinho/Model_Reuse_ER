@@ -104,12 +104,12 @@ t_l = 0.9
 t_p = 0.9
 is_al = False
 
-from meta_tl.transfer.incremental.util import split_linkage_problem_tasks, \
+from morer.reuse.incremental.util import split_linkage_problem_tasks, \
     split_linkage_problem_tasks_on_training_data_pairs
-from meta_tl.data_io import linkage_problem_io
+from morer.data_io import linkage_problem_io
 from record_linkage.classification.machine_learning import constants, active_learning_solution
 from record_linkage.evaluation import metrics
-from meta_tl.data_io.test_data import reader, wdc_reader, almser_linkage_reader
+from morer.data_io.test_data import reader, wdc_reader, almser_linkage_reader
 import os
 
 p_list, r_list, f_list = [], [], []

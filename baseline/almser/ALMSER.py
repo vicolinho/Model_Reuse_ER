@@ -616,7 +616,7 @@ class ALMSER(object):
                 return self.rltd_top_setting
 
         else:
-            print("Based on supervised naive transfer learning results")
+            print("Based on supervised naive reuse learning results")
             heatmap_ = ntl_heatmap
 
         if showHeatmap:

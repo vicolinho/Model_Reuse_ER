@@ -171,7 +171,7 @@ class ALMSER_EXP(ALMSER):
 
                 print("Iteration: %i" % it_)
                 if it_ >= 20 and it_ % 20 == 0:
-                    print("--Recalculate best transfer setting--")
+                    print("--Recalculate best reuse setting--")
                     self.tasks_to_exploit = self.get_best_transf_setting(showHeatmap=True)
 
                     print("Current Task distribution:")
