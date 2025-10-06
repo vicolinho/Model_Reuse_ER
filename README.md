@@ -1,24 +1,23 @@
 # Model Reuse via Feature Distribution Analysis for Incremental Entity Resolution
 
-Entity resolution is essential for data integration, facilitating analytics and insights from 
-complex systems. Multi-source and incremental entity resolution address the challenges of 
-integrating diverse and dynamic data, which is common in real-world scenarios. 
-A critical question is how to classify matches and non-matches among record pairs 
-from new and existing data sources. Traditional threshold-based methods often yield lower quality 
-than machine learning (ML) approaches, while incremental methods may lack stability depending on 
-the order in which new data is integrated. 
+Entity resolution (ER) is a fundamental task in data integration that enables insights from heterogeneous data sources. 
+The primary challenge of ER lies in classifying record pairs as matches or non-matches, 
+which in multi-source ER (MS-ER) scenarios can become complicated due to data source heterogeneity and
+scalability issues. Existing methods for MS-ER generally require labeled
+record pairs, and such methods fail to effectively reuse models across multiple ER tasks. 
 
-Additionally, reusing training data and existing models for new data sources is unresolved for 
-multi-source entity resolution. Even the approach of transfer learning does not consider the 
-challenge of which source domain should be used to transfer model and training data information 
-for a certain target domain. Naive strategies for training new models for each new linkage problem 
-are inefficient.
+We propose _MoRER_ (Model Repositories for Entity Resolution), a novel method for building a model repository
+consisting of classification models that solve ER problems. By leveraging feature distribution analysis, 
+_MoRER_ clusters similar ER tasks thereby enabling the effective initialization of a model repository
+with a moderate labeling effort. 
 
-This work addresses these challenges and focuses on managing existing models and the selection 
-of suitable models for new data sources based on feature distributions. 
-The results of our approach _MoRe_ demonstrate that our approach achieves comparable qualitative 
-results and outperforms both a multi-source active learning method and a transfer learning approach regarding
-efficiency as well as LLM-based ER methods.
+Experimental results on three multi-source datasets demonstrate that 
+_MoRER_ achieves comparable or better results to methods which have label-limited budges, such
+as active learning and transfer learning approaches, while outperforming unsupervised and 
+self-supervised approaches that utilize large pre-trained language models. When compared to supervised
+transformer-based methods, MoRER achieves comparable or better results depending on the training data size. 
+Importantly, _MoRER_ is the first method for building a model repository for ER problems, 
+facilitating the continuous integration of new data sources by reducing the need for generating new training data.
 
 
 ## Workflow
