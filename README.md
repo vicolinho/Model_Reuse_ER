@@ -45,10 +45,10 @@ and feature vectors as value.
 To use the raw feature files provided from the Almser publication, we transform them to our format where each data source pair is saved in a dictionary 
 with the similarity feature vector dictionary as value.
 
-`python record_linkage/almser_linkage_reader.py -ff data/linkage_problems/music_almser/source_pairs
-    -tp data/linkage_problems/selected_data_set/train_pairs_fv.csv 
-    -gs data/linkage_problems/selected_data_set/test_pairs_fv.csv 
-    -lo data/linkage_problems/selected_data_set`
+`python morer/data_io/test_data/almser_linkage_reader.py -ff data/linkage_problems/music_almser/source_pairs
+    -tp data/linkage_problems/music_almser/train_pairs_fv.csv 
+    -gs data/linkage_problems/music_almser/test_pairs_fv.csv 
+    -lo data/linkage_problems/music_almser`
 
 
 ## Run MoRER
