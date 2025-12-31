@@ -63,20 +63,20 @@ run MoRER on the dexter data set with bootstrap active learning using a budget o
 
 ### Parameters
 
-| Name                               | Description                                                                                                  | Options                                                                       |
-|------------------------------------|--------------------------------------------------------------------------------------------------------------|-------------------------------------------------------------------------------|
-| `--train_pairs`<br>`-tp`           | Train pairs (input file containing training data).                                                           | -                                                                             |
-| `--test_pairs`<br>`-gs`            | Test pairs (input file containing test data).                                                                | -                                                                             |
-| `--linkage_tasks_dir`<br>`-l`      | Directory for linkage problems.                                                                              | -                                                                             |
-| `--statistical_test`<br>`-s`       | Statistical test for comparing linkage problems.                                                             | default: `ks_test`<br> `wasserstein_distance`, `calculate_psi`                |
+| Name                               | Description                                                                                                  | Options                                                                         |
+|------------------------------------|--------------------------------------------------------------------------------------------------------------|---------------------------------------------------------------------------------|
+| `--train_pairs`<br>`-tp`           | Train pairs (input file containing training data).                                                           | -                                                                               |
+| `--test_pairs`<br>`-gs`            | Test pairs (input file containing test data).                                                                | -                                                                               |
+| `--linkage_tasks_dir`<br>`-l`      | Directory for linkage problems.                                                                              | -                                                                               |
+| `--statistical_test`<br>`-s`       | Statistical test for comparing linkage problems.                                                             | default: `ks_test`<br> `wasserstein_distance`, `calculate_psi`,`ML_based`       |
 | `--comm_detect`<br>`-cd`           | Community detection algorithm to use.                                                                        | default:`leiden`<br>`louvain`, `girvan_newman`,<br>`label_propagation_clustering` |
-| `--model_generation`<br>`-mg`      | Model generation algorithm to use.                                                                           | default: `bootstrap`<br> `almser`,`supervised`                          |
-| `--min_budget`<br>`-mb`            | Minimum budget for each cluster.                                                                             | default: `50`                                                                 |
-| `--total_budget`<br>`-tb`          | Total budget for the entire process.                                                                         | default: `1000`                                                               |
-| `--batch_size`<br> `-b`            | Batch size for active learning.                                                                              | default: `5`                                                                  |
-| `--is_recluster`<br> `-rec`        | is recluster                                                                                                 | default: `False`                                                              |
-| `--unsolved_ratio`<br>`-uns_ratio` | ratio threshold t_cov of the number of problems not being used for training and all problems in a cluster.   | default: `0.25`                                                               |
-| `--budget_retrain`<br> `-b_rt`     | label budget for retraining step if only new problems are in the cluster                                     | default: `250`                                                                |
+| `--model_generation`<br>`-mg`      | Model generation algorithm to use.                                                                           | default: `bootstrap`<br> `almser`,`supervised`                                  |
+| `--min_budget`<br>`-mb`            | Minimum budget for each cluster.                                                                             | default: `50`                                                                   |
+| `--total_budget`<br>`-tb`          | Total budget for the entire process.                                                                         | default: `1000`                                                                 |
+| `--batch_size`<br> `-b`            | Batch size for active learning.                                                                              | default: `5`                                                                    |
+| `--is_recluster`<br> `-rec`        | is recluster                                                                                                 | default: `False`                                                                |
+| `--unsolved_ratio`<br>`-uns_ratio` | ratio threshold t_cov of the number of problems not being used for training and all problems in a cluster.   | default: `0.25`                                                                 |
+| `--budget_retrain`<br> `-b_rt`     | label budget for retraining step if only new problems are in the cluster                                     | default: `250`                                                                  |
 
 ## References
 
