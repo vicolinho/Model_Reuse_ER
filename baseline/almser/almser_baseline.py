@@ -18,7 +18,7 @@ train_pairs = 'data/linkage_problems/music_almser/train_pairs_fv.csv'
 test_pairs = 'data/linkage_problems/music_almser/test_pairs_fv.csv'
 output_path = 'results'
 # Active Learning Settings
-max_queries = 1000
+max_queries = sys.argv[1]
 runs = 3
 query_strategy = 'almser_gb' #almser_gb, uncertainty, disagreeement, almser_group, random
 
@@ -166,7 +166,8 @@ almser_exp.log.log_info.to_csv(os.path.join(output_path,filename+"_LOG_INFO.csv"
 results_all.to_csv(os.path.join(output_path, filename+".csv"), index=False)
 
 file_name_overall = "almser_res"
-almser_res = results_all[['F1_model_micro_boost_graph_std', 'F1_model_micro_boost_graph', 'run_time']]
+almser_res = results_all[['P_boost_graph', 'P_boost_graph_std', 'R_boost_graph', 'R_boost_graph_std',
+                          'F1_model_micro_boost_graph_std', 'F1_model_micro_boost_graph', 'run_time']]
 almser_res = almser_res.assign(budget=max_queries)
 almser_res = almser_res.assign(batch=ACTIVE_LEARNING_ITERATION_BUDGET)
 almser_res.to_csv(os.path.join(output_path, file_name_overall+".csv"), index=False, mode='a')

@@ -252,7 +252,7 @@ def compare_linkage_tasks_numpy(df_1: numpy.ndarray, df_2: numpy.ndarray, task_1
             # instantiate the classifier
             model = XGBClassifier(**params)
             kfold = KFold(n_splits=5)
-            cv_score = cross_val_score(model, x, y, cv=kfold, scoring='accuracy').mean()
+            cv_score = cross_val_score(model, x, y, cv=kfold, scoring='f1').mean()
             return task_1_name, task_2_name, cv_score
         elif test_type == 'MMD':
             mmd_value = mmd_permutation_test(df_1, df_2)
@@ -329,10 +329,11 @@ def evaluate_similarity(results, test_type, alpha=0.05):
     int: 1 if the files are similar, 0 otherwise.
     """
     if test_type == 'ML_based':
-        return 0 if results > 0.80 else 1
-
+        # return 0 if results > 0.80 else 1
+        return 1 - results
     elif test_type == 'MMD':
-        return 0 if results < 0.05 else 1
+        # return 0 if results < 0.05 else 1
+        return results
 
     elif isinstance(results, list):
         if test_type == 'ks_test':
@@ -420,6 +421,8 @@ def transform_to_statistic_result(first_tasks, second_tasks, stat_lists, similar
             print("empty")
     else:
         print(results_df['similarity'])
+        similar_tasks_df['avg_similarity'] = results_df['similarity']
+        results_df['avg_similarity'] = results_df['similarity']
 
     # Output statistics
     num_similar_tasks = similar_tasks_df.shape[0]

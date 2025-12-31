@@ -446,6 +446,8 @@ class ALMSER(object):
         self.results.loc[iteration].tps_boost_graph = tps
         self.results.loc[iteration].fps_boost_graph = fps
         self.results.loc[iteration].fns_boost_graph = fns
+        self.results.loc[iteration].P_boost_graph = round(prec_boost_graph, 4)
+        self.results.loc[iteration].R_boost_graph = round(recall_boost_graph, 4)
         self.results.loc[iteration].F1_model_micro_boost_graph = round(fscore_boost_graph, 3)
 
         # f1 per group based model
