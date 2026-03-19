@@ -1,3 +1,5 @@
+![](MoRER_logo.png)
+
 # Efficient Model Repository for Entity Resolution: Construction, Search, and Integration
 Entity resolution (ER) is a fundamental task in data integration that enables insights from heterogeneous data sources. 
 The primary challenge of ER lies in classifying record pairs as matches or non-matches, 
